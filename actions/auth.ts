@@ -8,43 +8,55 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { hash } from "@node-rs/argon2";
 import { generateId } from "lucia";
+import { PrismaClient } from "@prisma/client";
 type LoginRequest = {
-	username: string,
-	password: string
-}
+  userNameOrEmail: string;
+  password: string;
+};
 export async function login({
-  username,
-  password
+  userNameOrEmail,
+  password,
 }: LoginRequest): Promise<ActionResult> {
-  if (
-    typeof username !== "string" ||
-    username.length < 3 ||
-    username.length > 31 ||
-    !/^[a-z0-9_-]+$/.test(username)
+	const isNotUsername = isEmail(userNameOrEmail);
+ 
+  if ( !isNotUsername 
+	&& (
+    typeof userNameOrEmail !== "string" ||
+    userNameOrEmail.length < 3 ||
+    userNameOrEmail.length > 31 ||
+    !/^[a-z0-9_-]+$/.test(userNameOrEmail)
+	 )
   ) {
-    return {
-      error: "Invalid username",
-    };
+	throw new Error("Invalid username or email")
+  
   }
   if (
     typeof password !== "string" ||
     password.length < 6 ||
     password.length > 255
   ) {
-    return {
-      error: "Invalid password",
-    };
+	throw new Error("Invalid passsword")
+
+
+  }
+  let existingUser = null
+  if (!isNotUsername) {
+    existingUser = await db.user.findFirst({
+      where: {
+        username: userNameOrEmail,
+      },
+    });
+  } else {
+    existingUser = await db.user.findFirst({
+      where: {
+        email: userNameOrEmail,
+      },
+    });
   }
 
-  const existingUser = await db.user.findFirst({
-    where: {
-      username,
-    },
-  });
   if (!existingUser) {
-    return {
-      error: "Incorrect username or password",
-    };
+	throw new Error("No such user")
+    
   }
 
   const validPassword = await verify(existingUser.password, password, {
@@ -63,13 +75,12 @@ export async function login({
     // Since protecting against this is non-trivial,
     // it is crucial your implementation is protected against brute-force attacks with login throttling, 2FA, etc.
     // If usernames are public, you can outright tell the user that the username is invalid.
-    return {
-      error: "Incorrect username or password",
-    };
+	throw new Error("No such user")
+
   }
 
   const session = await lucia.createSession(existingUser.id, {});
-const sessionCookie = lucia.createSessionCookie(session.id);
+  const sessionCookie = lucia.createSessionCookie(session.id);
   cookies().set(
     sessionCookie.name,
     sessionCookie.value,
@@ -78,16 +89,15 @@ const sessionCookie = lucia.createSessionCookie(session.id);
   return redirect("/");
 }
 
-
 type RegisterRequest = {
-	username: string,
-	email: string,
-	password: string,
-}
+  username: string;
+  email: string;
+  password: string;
+};
 export async function signup({
-	username,
-	email,
-	password
+  username,
+  email,
+  password,
 }: RegisterRequest): Promise<ActionResult> {
   // username must be between 4 ~ 31 characters, and only consists of lowercase letters, 0-9, -, and _
   // keep in mind some database (e.g. mysql) are case insensitive
@@ -97,25 +107,21 @@ export async function signup({
     username.length > 31 ||
     !/^[a-z0-9_-]+$/.test(username)
   ) {
-    return {
-      error: "Invalid username",
-    };
+	throw new Error("Invalid username")
+   
   }
-  if (
-	!email
-  ) {
-    return {
-      error: "Invalid email",
-    };
+  if (!email) {
+	throw new Error("Invalid Error")
+    
   }
   if (
     typeof password !== "string" ||
     password.length < 6 ||
     password.length > 255
   ) {
-    return {
-      error: "Invalid password",
-    };
+	throw new Error("Invalid password")
+
+    
   }
 
   const passwordHash = await hash(password, {
@@ -130,13 +136,12 @@ export async function signup({
   try {
     const res = await db.user.create({
       data: {
-		id: userId,
+        id: userId,
         username,
         password: passwordHash,
         email: email as string,
       },
     });
-	console.log("the db insert: " , res)
 
     const session = await lucia.createSession(userId, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
@@ -146,15 +151,14 @@ export async function signup({
       sessionCookie.attributes
     );
   } catch (e) {
-	 console.log("THE error is : " , e)
-    // if (e instanceof SqliteError && e.code === "SQLITE_CONSTRAINT_UNIQUE") {
-    // 	return {
-    // 		error: "Username already used"
-    // 	};
-    // }
-    return {
-      error: "An unknown error occurred",
-    };
+   
+	console.log(e)
+    throw new Error("Error has occured.");
   }
   return redirect("/");
+}
+
+function isEmail(str: string) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(str);
 }

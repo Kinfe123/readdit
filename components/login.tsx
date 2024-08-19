@@ -1,10 +1,48 @@
-
+'use client'
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-
+import {useState , useTransition} from 'react'
+import { useToast } from "./ui/use-toast"
+import { login } from "@/actions/auth"
+import { Loader } from "lucide-react"
 export function Login() {
+  const [isPending, startTransition] = useTransition()
+
+  const [loginData, setloginData] = useState({
+    userNameOrEmail: "",
+    password: ""
+  })
+  const toast = useToast()
+  const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    const { userNameOrEmail , password  } = loginData
+    startTransition(() => {
+      login({
+        userNameOrEmail,
+        password
+      }).then((res) => {
+        toast.toast({
+          title: "Successfully logged in",
+          description: 'You have successfully loggedin.'
+        })
+      
+      }).catch((err) => {
+        toast.toast({
+          title: "Something went wrong",
+          description: 'There is something went wrong.',
+          variant: "destructive"
+        })
+      })
+    })
+    }
+      const handleStateUpdate = (e: React.ChangeEventHandler<HTMLInputElement>) => {
+        setloginData({
+          ...loginData ,
+          [e.target.name]: e.target.value
+        })
+      }
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background">
       <section className="max-w-md w-full p-4">
@@ -20,14 +58,16 @@ export function Login() {
             <form className="space-y-4">
               <div className="space-y-1">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="example@email.com" />
+                <Input name="userNameOrEmail" value={loginData.userNameOrEmail} type="text" onChange={handleStateUpdate} placeholder="Username or Email" />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" />
+                <Input name="password" type="password" value={loginData.password}  onChange={handleStateUpdate}/>
               </div>
-              <Button type="submit" className="w-full">
-                Login
+              <Button disabled={isPending} onClick={handleLogin} className="w-full flex gap-2 justify-center items-center">
+                {isPending && (
+                  <Loader className='animate-spin w-4 h-4' />
+                )} Log in
               </Button>
               <div className="text-center text-sm">
                 Don't have an account?{" "}

@@ -38,6 +38,7 @@ model Book {
   description String
   author      String
   authorId    String
+  approveStatus  ApporvalStatus @default(PENDING)  
   authorUser  User    @relation("AuthorBooks", fields: [authorId], references: [id])
   votes       Vote[]
 }
@@ -56,4 +57,10 @@ model Vote {
 enum VoteType {
   UPVOTE
   DOWNVOTE
+}
+
+enum ApporvalStatus {
+  APPROVED
+  PENDING
+  REJECTED
 }
