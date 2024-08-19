@@ -130,6 +130,7 @@ export async function signup({
   try {
     const res = await db.user.create({
       data: {
+		id: userId,
         username,
         password: passwordHash,
         email: email as string,
