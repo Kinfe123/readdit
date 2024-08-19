@@ -1,6 +1,6 @@
 // BookCategories.js
 import Link from "next/link";
-import { FigmaIcon, BookIcon, ClubIcon, CalendarIcon, HistoryIcon, HomeIcon, LuggageIcon, PaletteIcon, SpaceIcon } from './Icons'; // Adjust path as necessary
+import { FigmaIcon, BookIcon, ClubIcon, CalendarIcon, HistoryIcon, HomeIcon, LuggageIcon, PaletteIcon, SpaceIcon, Microscope  } from 'lucide-react';
 
 const categories = [
   { name: 'Fiction', icon: FigmaIcon, bgColor: 'bg-accent', textColor: 'text-accent-foreground' },
@@ -9,7 +9,7 @@ const categories = [
   { name: 'Biography', icon: BookIcon, bgColor: 'bg-muted', textColor: 'text-muted-foreground' },
   { name: 'Poetry', icon: PaletteIcon, bgColor: 'bg-card', textColor: 'text-card-foreground' },
   { name: 'History', icon: CalendarIcon, bgColor: 'bg-accent', textColor: 'text-accent-foreground' },
-  { name: 'Science', icon: SpaceIcon, bgColor: 'bg-primary', textColor: 'text-primary-foreground' },
+  { name: 'Science', icon: Microscope, bgColor: 'bg-primary', textColor: 'text-primary-foreground' },
   { name: 'Philosophy', icon: HistoryIcon, bgColor: 'bg-secondary', textColor: 'text-secondary-foreground' },
   { name: 'Self-Help', icon: HomeIcon, bgColor: 'bg-muted', textColor: 'text-muted-foreground' },
   { name: 'Travel', icon: LuggageIcon, bgColor: 'bg-card', textColor: 'text-card-foreground' },

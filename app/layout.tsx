@@ -4,6 +4,7 @@ import "./globals.css";
 import { DM_Sans } from 'next/font/google'
 import { Space_Mono } from 'next/font/google'
 import { cn } from "@/lib/utils";
+import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -37,7 +38,10 @@ export default function RootLayout({
           'antialiased',
           fontHeading.variable,
           fontBody.variable
-        )}>{children}</body>
+        )}>{children}
+
+        <Footer />
+      </body>
     </html >
   );
 }

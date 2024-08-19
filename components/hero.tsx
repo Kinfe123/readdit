@@ -35,7 +35,7 @@ export function Hero() {
      <BackgroundDots />
       <div className="mx-auto max-w-md text-center z-40">
         <div className="space-y-4">
-          <h1 className="text-3xl font-heading font-bold tracking-tight text-foreground sm:text-4xl">Welcome to our Bookstore!</h1>
+          <h1 className="text-3xl font-heading font-bold tracking-tight text-foreground sm:text-4xl">Welcome to our BookGang</h1>
           <p className="text-muted-foreground font-body">A chill place to hangout with your buddy and share your mega and chad level mind with others..</p>
         </div>
         <div className="mt-6 flex flex-row gap-4 items-center justify-center font-body">
