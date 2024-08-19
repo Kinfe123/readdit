@@ -28,11 +28,12 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { BookIcon, UploadIcon } from "lucide-react"
 import BackgroundDots from "./background/DotPattern"
+import Link from "next/link"
 
 export function Hero() {
   return (
     <div className="flex relative min-h-[100dvh] bg-[url('/placeholder.svg')] bg-cover bg-center bg-opacity-50  flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:lg:px-8">
-     <BackgroundDots />
+      <BackgroundDots />
       <div className="mx-auto max-w-md text-center z-40">
         <div className="space-y-4">
           <h1 className="text-3xl font-heading font-bold tracking-tight text-foreground sm:text-4xl">Welcome to our BookGang</h1>
@@ -40,16 +41,19 @@ export function Hero() {
         </div>
         <div className="mt-6 flex flex-row gap-4 items-center justify-center font-body">
           <RadioGroup name="user-type" className="flex items-center gap-2">
-            <div className="flex items-center gap-2">
-              <RadioGroupItem value="customer" id="customer" className="peer sr-only" />
-              <Label
-                htmlFor="customer"
-                className="flex cursor-pointer items-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted peer-checked:bg-primary peer-checked:text-primary-foreground peer-checked:text-black"
-              >
-                <BookIcon className="h-5 w-5" />
-                Explore Books
-              </Label>
-            </div>
+            <Link href="/books">
+              <div className="flex items-center gap-2">
+                <RadioGroupItem value="customer" id="customer" className="peer sr-only" />
+                <Label
+                  htmlFor="customer"
+                  className="flex cursor-pointer items-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted peer-checked:bg-primary peer-checked:text-primary-foreground peer-checked:text-black"
+                >
+                  <BookIcon className="h-5 w-5" />
+                  Explore Books
+                </Label>
+              </div>
+            </Link>
+            <Link href="/login">
             <div className="flex items-center gap-2">
               <RadioGroupItem value="customer" id="customer" className="peer sr-only" />
               <Label
@@ -60,6 +64,7 @@ export function Hero() {
                 Upload Books
               </Label>
             </div>
+            </Link>
 
           </RadioGroup>
         </div>

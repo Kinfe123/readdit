@@ -5,6 +5,7 @@ import { DM_Sans } from 'next/font/google'
 import { Space_Mono } from 'next/font/google'
 import { cn } from "@/lib/utils";
 import Footer from "@/components/Footer";
+import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -41,6 +42,7 @@ export default function RootLayout({
         )}>{children}
 
         <Footer />
+        <Toaster />
       </body>
     </html >
   );

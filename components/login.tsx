@@ -31,7 +31,7 @@ export function Login() {
               </Button>
               <div className="text-center text-sm">
                 Don't have an account?{" "}
-                <Link href="#" className="underline" prefetch={false}>
+                <Link href="/signup" className="underline" prefetch={false}>
                   Sign up
                 </Link>
               </div>
