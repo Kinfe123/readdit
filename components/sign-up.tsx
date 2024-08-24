@@ -41,7 +41,7 @@ export function SignUp() {
     })
   }
 
-  const handleStateUpdate = (e: React.ChangeEventHandler<HTMLInputElement>) => {
+  const handleStateUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegisterData({
       ...registerData,
       [e.target.name]: e.target.value
