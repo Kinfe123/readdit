@@ -1,41 +1,88 @@
-
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from "@/components/ui/dropdown-menu"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "./ui/scroll-area";
 const navData = [
   {
-    href: '/',
+    href: "/",
     icon: HomeIcon,
-    label: 'Dashboard'
+    label: "Dashboard",
   },
   {
-    href: '/analytics',
+    href: "/analytics",
     icon: LineChartIcon,
-    label: 'Analytics'
+    label: "Analytics",
   },
   {
-    href: '/upload-book',
+    href: "/upload-book",
     icon: ShoppingCartIcon,
-    label: 'Upload book'
+    label: "Upload book",
   },
   {
-    href: '/notification',
+    href: "/notification",
     icon: PackageIcon,
-    label: ''
+    label: "Bonus / Rewards",
   },
   {
-    href: '/sessions',
+    href: "/sessions",
     icon: UsersIcon,
-    label: 'Active Sessions'
+    label: "Active Sessions",
   },
- 
 ];
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ScrollArea className="[&>div>div[style]]:!block">
-      <aside className="hidden w-64 absolute top-0 left-0 flex-col border-r bg-background p-4 sm:flex">
+    <div className="relative min-h-screen">
+      <div className="flex h-14 items-center justify-between border-b bg-background px-4 sm:h-16 sm:px-6">
+        <div className="flex items-center gap-4">
+          <Button variant="outline" size="icon" className="sm:hidden">
+            <MenuIcon className="h-6 w-6" />
+            <span className="sr-only">Toggle menu</span>
+          </Button>
+          <h1 className="text-lg font-bold sm:text-xl">Dashboard</h1>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="relative flex-1 sm:max-w-xs">
+            <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="Search..."
+              className="w-full rounded-md bg-background pl-8 sm:w-auto"
+            />
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <img
+                  src="/placeholder.svg"
+                  width="32"
+                  height="32"
+                  className="rounded-full"
+                  alt="Avatar"
+                  style={{ aspectRatio: "32/32", objectFit: "cover" }}
+                />
+                <span className="sr-only">Toggle user menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem>Support</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
+      <aside className="hidden w-64 flex-col border-r bg-background p-4 sm:flex">
         <div className="flex items-center gap-2 pb-4">
           <Package2Icon className="h-6 w-6" />
           <span className="text-xl font-bold">Acme Inc</span>
@@ -51,53 +98,10 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             {label}
           </Link>
         ))}
-
       </aside>
-      <div className="flex flex-1 flex-col">
-        <div className="flex h-14 items-center justify-between border-b bg-background px-4 sm:h-16 sm:px-6">
-          <div className="flex items-center gap-4">
-            <Button variant="outline" size="icon" className="sm:hidden">
-              <MenuIcon className="h-6 w-6" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
-            <h1 className="text-lg font-bold sm:text-xl">Dashboard</h1>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="relative flex-1 sm:max-w-xs">
-              <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input type="search" placeholder="Search..." className="w-full rounded-md bg-background pl-8 sm:w-auto" />
-            </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
-                  <img
-                    src="/placeholder.svg"
-                    width="32"
-                    height="32"
-                    className="rounded-full"
-                    alt="Avatar"
-                    style={{ aspectRatio: "32/32", objectFit: "cover" }}
-                  />
-                  <span className="sr-only">Toggle user menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Logout</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-        <main className="flex-1 p-4 sm:p-6">
-          {children}
-        </main>
-      </div>
-    </ScrollArea>
-  )
+        <main className="flex-1 p-4 sm:p-6">{children}</main>
+    </div>
+  );
 }
 
 function HomeIcon(props: any) {
@@ -117,9 +121,8 @@ function HomeIcon(props: any) {
       <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
       <polyline points="9 22 9 12 15 12 15 22" />
     </svg>
-  )
+  );
 }
-
 
 function LineChartIcon(props: any) {
   return (
@@ -138,9 +141,8 @@ function LineChartIcon(props: any) {
       <path d="M3 3v18h18" />
       <path d="m19 9-5 5-4-4-3 3" />
     </svg>
-  )
+  );
 }
-
 
 function MenuIcon(props: any) {
   return (
@@ -160,9 +162,8 @@ function MenuIcon(props: any) {
       <line x1="4" x2="20" y1="6" y2="6" />
       <line x1="4" x2="20" y1="18" y2="18" />
     </svg>
-  )
+  );
 }
-
 
 function Package2Icon(props: any) {
   return (
@@ -182,9 +183,8 @@ function Package2Icon(props: any) {
       <path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9" />
       <path d="M12 3v6" />
     </svg>
-  )
+  );
 }
-
 
 function PackageIcon(props: any) {
   return (
@@ -205,9 +205,8 @@ function PackageIcon(props: any) {
       <path d="m3.3 7 8.7 5 8.7-5" />
       <path d="M12 22V12" />
     </svg>
-  )
+  );
 }
-
 
 function SearchIcon(props: any) {
   return (
@@ -226,9 +225,8 @@ function SearchIcon(props: any) {
       <circle cx="11" cy="11" r="8" />
       <path d="m21 21-4.3-4.3" />
     </svg>
-  )
+  );
 }
-
 
 function ShoppingCartIcon(props: any) {
   return (
@@ -248,9 +246,8 @@ function ShoppingCartIcon(props: any) {
       <circle cx="19" cy="21" r="1" />
       <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
     </svg>
-  )
+  );
 }
-
 
 function UsersIcon(props: any) {
   return (
@@ -271,5 +268,5 @@ function UsersIcon(props: any) {
       <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
       <path d="M16 3.13a4 4 0 0 1 0 7.75" />
     </svg>
-  )
+  );
 }
