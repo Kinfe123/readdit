@@ -22,7 +22,7 @@ const navData = [
     label: "Analytics",
   },
   {
-    href: "/upload-book",
+    href: "/uploads",
     icon: ShoppingCartIcon,
     label: "Upload book",
   },
@@ -39,47 +39,49 @@ const navData = [
 ];
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative min-h-screen">
-      <div className="flex h-14 items-center justify-between border-b bg-background px-4 sm:h-16 sm:px-6">
-        <div className="flex items-center gap-4">
-          <Button variant="outline" size="icon" className="sm:hidden">
-            <MenuIcon className="h-6 w-6" />
-            <span className="sr-only">Toggle menu</span>
-          </Button>
-          <h1 className="text-lg font-bold sm:text-xl">Dashboard</h1>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="relative flex-1 sm:max-w-xs">
-            <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search..."
-              className="w-full rounded-md bg-background pl-8 sm:w-auto"
-            />
+    <div className="relative min-h-screen w-full flex">
+      <div className="absolute top-0 w-full flex bg-red-900">
+        <div className=" h-14 flex items-center justify-between w-full  border-b bg-background px-4 sm:h-16 sm:px-20">
+          <div className="flex items-center gap-4">
+            <Button variant="outline" size="icon" className="sm:hidden">
+              <MenuIcon className="h-6 w-6" />
+              <span className="sr-only">Toggle menu</span>
+            </Button>
+            <h1 className="text-lg font-bold sm:text-xl">Dashboard</h1>
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <img
-                  src="/placeholder.svg"
-                  width="32"
-                  height="32"
-                  className="rounded-full"
-                  alt="Avatar"
-                  style={{ aspectRatio: "32/32", objectFit: "cover" }}
-                />
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="flex items-center gap-4">
+            <div className="relative flex-1 sm:max-w-xs">
+              <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Search..."
+                className="w-full rounded-md bg-background pl-8 sm:w-auto"
+              />
+            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="rounded-full">
+                  <img
+                    src="/placeholder.svg"
+                    width="32"
+                    height="32"
+                    className="rounded-full"
+                    alt="Avatar"
+                    style={{ aspectRatio: "32/32", objectFit: "cover" }}
+                  />
+                  <span className="sr-only">Toggle user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuItem>Support</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
       <aside className="hidden w-64 flex-col border-r bg-background p-4 sm:flex">
@@ -91,7 +93,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         {navData.map(({ href, icon: Icon, label }) => (
           <Link
             key={href}
-            href={href}
+            href={`/dashboard/${href}`}
             className="flex w-full items-center gap-2 my-4 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-foreground"
           >
             <Icon className="h-5 w-5" />
@@ -99,7 +101,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           </Link>
         ))}
       </aside>
-        <main className="flex-1 p-4 sm:p-6">{children}</main>
+      <main className="flex-1 p-4 sm:p-6 mt-20 ml-10">{children}</main>
     </div>
   );
 }
