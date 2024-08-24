@@ -82,7 +82,7 @@ export function Books() {
             <p className="text-muted-foreground">George Orwell</p>
             <p className="text-sm mt-2">
               1984 is a dystopian social science fiction novel by English novelist George Orwell. It was published in 1949
-              and is Orwell's most famous work, with the possible exception of Animal Farm.
+              and is Orwell&apos; most famous work, with the possible exception of Animal Farm.
             </p>
           </div>
           <div className="bg-muted px-4 py-2 flex justify-between items-center">
