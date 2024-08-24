@@ -140,7 +140,7 @@ export function Books() {
   )
 }
 
-function ArrowDownIcon(props) {
+function ArrowDownIcon(props: any) {
   return (
     <svg
       {...props}
@@ -161,7 +161,7 @@ function ArrowDownIcon(props) {
 }
 
 
-function ArrowUpIcon(props) {
+function ArrowUpIcon(props: any) {
   return (
     <svg
       {...props}
