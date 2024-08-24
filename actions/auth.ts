@@ -86,7 +86,7 @@ export async function login({
     sessionCookie.value,
     sessionCookie.attributes
   );
-  return redirect("/");
+  return redirect("/dashboard");
 }
 
 type RegisterRequest = {
@@ -155,7 +155,7 @@ export async function signup({
 	console.log(e)
     throw new Error("Error has occured.");
   }
-  return redirect("/");
+  return redirect("/login");
 }
 
 function isEmail(str: string) {

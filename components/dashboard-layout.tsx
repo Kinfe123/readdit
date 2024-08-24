@@ -11,30 +11,31 @@ const navData = [
     label: 'Dashboard'
   },
   {
-    href: '/books',
+    href: '/analytics',
+    icon: LineChartIcon,
+    label: 'Analytics'
+  },
+  {
+    href: '/upload-book',
     icon: ShoppingCartIcon,
-    label: 'Orders'
+    label: 'Upload book'
   },
   {
     href: '/notification',
     icon: PackageIcon,
-    label: 'Products'
+    label: ''
   },
   {
-    href: '/customers',
+    href: '/sessions',
     icon: UsersIcon,
-    label: 'Customers'
+    label: 'Active Sessions'
   },
-  {
-    href: '/analytics',
-    icon: LineChartIcon,
-    label: 'Analytics'
-  }
+ 
 ];
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
-      <aside className="hidden w-64 sticky top-0 left-0 flex-col border-r bg-background p-4 sm:flex">
+      <aside className="hidden w-64 absolute top-0 left-0 flex-col border-r bg-background p-4 sm:flex">
         <div className="flex items-center gap-2 pb-4">
           <Package2Icon className="h-6 w-6" />
           <span className="text-xl font-bold">Acme Inc</span>

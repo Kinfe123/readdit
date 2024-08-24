@@ -20,6 +20,9 @@
     "@radix-ui/react-scroll-area": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.1",
+    "@t3-oss/env-core": "^0.11.0",
+    "@t3-oss/env-nextjs": "^0.11.0",
+    "@uploadthing/react": "^6.7.2",
     "arctic": "^1.9.2",
     "better-sqlite3": "^9.2.2",
     "class-variance-authority": "^0.7.0",
@@ -32,6 +35,7 @@
     "react-hook-form": "^7.53.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "uploadthing": "^6.13.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {

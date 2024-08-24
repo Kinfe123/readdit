@@ -5,9 +5,9 @@ import { redirect } from "next/navigation"
 
 const SignUpPage = async () => {
     const {user} = await validateRequest()
-    // if(user) {
-    //     return redirect("/dashboard")
-    // }
+    if(user) {
+        return redirect("/dashboard")
+    }
     return (
         <div className="min-h-screen flex flex-col justify-center items-center">
             <SignUp  />

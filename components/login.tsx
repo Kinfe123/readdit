@@ -80,7 +80,7 @@ export function Login() {
                       name="userNameOrEmail"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Name</FormLabel>
+                          <FormLabel>Username or Email</FormLabel>
                           <FormControl>
                             <Input {...field} placeholder="UserName or Email" />
                           </FormControl>
@@ -95,9 +95,9 @@ export function Login() {
                       name="password"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Name</FormLabel>
+                          <FormLabel>Password</FormLabel>
                           <FormControl>
-                            <Input {...field} placeholder="Password" />
+                            <Input {...field} placeholder="Password" type="password" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

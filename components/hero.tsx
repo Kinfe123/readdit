@@ -53,7 +53,7 @@ export async function Hero() {
   )
 }
 
-function UserIcon(props) {
+function UserIcon(props: any) {
   return (
     <svg
       {...props}
@@ -74,7 +74,7 @@ function UserIcon(props) {
 }
 
 
-function UsersIcon(props) {
+function UsersIcon(props: any) {
   return (
     <svg
       {...props}
