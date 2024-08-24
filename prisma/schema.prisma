@@ -20,6 +20,9 @@ model User {
   email     String  @unique
   password  String
   username  String? @unique
+  profilePicture    String?
+  coverPicture    String?
+  Xp         Int    @default(0)
   name      String?
   books     Book[]  @relation("AuthorBooks")
   votes     Vote[]
@@ -39,6 +42,7 @@ model Book {
   author      String
   authorId    String
   approveStatus  ApporvalStatus @default(PENDING)  
+  category       Category  @default(FICTION)
   authorUser  User    @relation("AuthorBooks", fields: [authorId], references: [id])
   votes       Vote[]
 }
@@ -63,4 +67,16 @@ enum ApporvalStatus {
   APPROVED
   PENDING
   REJECTED
+}
+enum Category {
+  FICTION
+  NONFICTION
+  CLASSICS
+  BIOGRAPHY
+  POETRY
+  HISTORY
+  SCIENCE
+  PHILOSOPHY
+  SELFHELP
+  TRAVEL
 }

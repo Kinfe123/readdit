@@ -32,7 +32,7 @@ export const lucia = new Lucia(adapter, {
     return {
       email: attributes.email,
       githubId: attributes.githubId,
-      userName: attributes.userName,
+      userName: attributes.username,
       picture: attributes.picture
     };
   },
@@ -83,6 +83,6 @@ declare module "lucia" {
 interface DatabaseUserAttributes {
   email: string;
   githubId: string;
-  userName: string;
+  username: string;
   picture: string;
 }
