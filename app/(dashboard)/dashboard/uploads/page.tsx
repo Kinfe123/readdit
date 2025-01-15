@@ -1,9 +1,8 @@
+import UploadBook from "@/components/upload-book"
+
 const UploadPage = () => {
     return (
-        <div>
-            Hllo wthis is from upload pagee
-
-        </div>
+        <UploadBook />
     )
 }
 export default UploadPage
