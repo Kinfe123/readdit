@@ -1,8 +1,27 @@
 
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+"use client";
+import { BookObject } from "@/lib/types"
+import { useEffect, useState } from "react"
+import Book from "./book"
 
 export function Books() {
+  const [booksList, setBooksList] = useState<BookObject[]>([])
+  useEffect(  () =>{
+    const fetchBooks = async () =>{
+      const response = await fetch("/api/books")
+
+      if (!response.ok) {
+        alert("something's wrong!")
+        return 
+      }
+
+      const data = await response.json()
+
+      setBooksList(data)
+    }
+
+    fetchBooks()
+  }, [])
   return (
     <div>
       <section className="py-6 md:py-12">
@@ -18,7 +37,13 @@ export function Books() {
         </div>
       </section>
       <section className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-        <div className="bg-background rounded-lg shadow-md overflow-hidden">
+        {booksList.map((b:BookObject) =>{
+         return  <Book bookData={b} key={b.id}  />
+        })}
+
+        {!booksList.length && <p> Sorry, No books have been found! </p>}
+
+       {/*<div className="bg-background rounded-lg shadow-md overflow-hidden">
           <div className="p-4">
             <h3 className="text-lg font-semibold">The Great Gatsby</h3>
             <p className="text-muted-foreground">F. Scott Fitzgerald</p>
@@ -133,7 +158,7 @@ export function Books() {
               <span className="text-sm text-muted-foreground">4</span>
             </div>
           </div>
-        </div>
+        </div>*/}
       </section>
     </div>
 
