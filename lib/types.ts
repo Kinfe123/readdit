@@ -10,3 +10,10 @@ export type BookCategory =
   "SELFHELP"|
   "TRAVEL"
 ;
+
+export interface BookFields {
+  title:string;
+  author:string;
+  description:string;
+  category:BookCategory
+}

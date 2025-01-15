@@ -7,14 +7,14 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { UploadDropzone } from "@/lib/uploadthing";
 import { z } from "zod";
 import { ChevronDown } from "lucide-react";
 import { useToast } from "./ui/use-toast";
+import { createBook } from "@/actions/book";
+import { BookCategory, BookFields } from "@/lib/types";
+
 
 const uploadBookSchema = z.object({
   title: z.string().min(4),
@@ -23,22 +23,22 @@ const uploadBookSchema = z.object({
   category: z.string(),
 });
 
-function UploadBook() {
-  const categories = [
-    "Fiction",
-    "Nonfiction",
-    "Classics",
-    "Biography",
-    "Poetry",
-    "History",
-    "Science",
-    "Philosophy",
-    "Selfhelp",
-    "Travel",
+ function UploadBook({  user }:{user:any}) {
+  const categories:BookCategory[] = [
+    "FICTION", 
+  "NONFICTION",
+  "CLASSICS",
+  "BIOGRAPHY",
+  "POETRY",
+  "HISTORY",
+  "SCIENCE",
+  "PHILOSOPHY",
+  "SELFHELP",
+  "TRAVEL"
   ];
   const toast = useToast();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<BookFields>({
     title: "",
     author: "",
     description: "",
@@ -52,13 +52,29 @@ function UploadBook() {
 
   const handleSubmit = (e:FormEvent<HTMLFormElement>) =>{
     e.preventDefault()
+    alert(JSON.stringify(user.id))
     try {
       const validatedData = uploadBookSchema.parse(formData);
-      console.log(`Validation succeeded: `, validatedData);
+      // here we submit the form
+      const {title, description, author, category} = formData
+      try {
+        createBook(title,author,description, category, user.id).then(book =>{
+          toast.toast({ 
+            title:"Book Uploaded Successfully",
+            description:"Please wait until its approaved by the admins",
+            
+          })
+        })
+      } catch (error:any) {
+        toast.toast({ 
+          title:"Error uploading the book",
+          description:error.message,
+          
+        })
+      }
     } catch (error) {
       if (error instanceof z.ZodError) {
       let fieldError = error.errors[0];
-      //console.log(fieldError)
       toast.toast({
         title:`${fieldError.path[0]} is invalid`,
         description:fieldError.message,
@@ -98,7 +114,7 @@ function UploadBook() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className=" mt-8  " align="end">
-              {categories.map((cat: string, i) => {
+              {categories.map((cat: BookCategory, i) => {
                 return (
                   <DropdownMenuItem
                     onClick={() => setFormData({ ...formData, category: cat })}
@@ -111,22 +127,7 @@ function UploadBook() {
           </DropdownMenu>
         </div>
 
-        {/*
        
-       <UploadDropzone
-        endpoint="imageUploader"
-        onClientUploadComplete={(res) => {
-          // Do something with the response
-          console.log("Files: ", res);
-          const files = res;
-
-          alert("Upload Completed");
-        }}
-        onUploadError={(error: Error) => {
-          // Do something with the error.
-          alert(`ERROR! ${error.message}`);
-        }}
-      /> */}
         <Button className="  block " type="submit">
           Submit
         </Button>

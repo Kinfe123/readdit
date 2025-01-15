@@ -1,8 +1,10 @@
 import UploadBook from "@/components/upload-book"
+import { validateRequest } from "@/lib/lucia";
 
-const UploadPage = () => {
+const UploadPage =  async() => {
+    const {user} =  await validateRequest()
     return (
-        <UploadBook />
+        <UploadBook user={user} />
     )
 }
 export default UploadPage
